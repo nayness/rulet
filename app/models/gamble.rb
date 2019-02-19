@@ -1,7 +1,7 @@
-class Player < ApplicationRecord
-  has_many :gambles
+class Gamble < ApplicationRecord
+  belongs_to :player
 
-  def gamble
+  def gamble(cash)
     current = 0
     return if cash <= 0
     if cash <= 1000

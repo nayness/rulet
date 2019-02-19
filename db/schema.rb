@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_19_133304) do
+ActiveRecord::Schema.define(version: 2019_02_19_190310) do
+
+  create_table "gambles", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "round_id"
+    t.float "percentage"
+    t.float "amount"
+    t.integer "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id", "round_id"], name: "index_gambles_on_player_id_and_round_id", unique: true
+  end
 
   create_table "players", force: :cascade do |t|
     t.string "name"
