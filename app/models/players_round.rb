@@ -1,0 +1,2 @@
+class PlayersRound < ApplicationRecord
+end
