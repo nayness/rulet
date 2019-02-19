@@ -1,0 +1,2 @@
+class GamblesController < ApplicationController
+end

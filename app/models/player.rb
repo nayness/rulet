@@ -1,5 +1,6 @@
 class Player < ApplicationRecord
   has_many :gambles
+  belongs_to :round
 
   def gamble
     current = 0
