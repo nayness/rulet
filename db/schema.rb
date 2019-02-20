@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_02_19_192611) do
     t.integer "color"
     t.integer "winner"
     t.float "total_amount"
-    t.integer "state"
+    t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
