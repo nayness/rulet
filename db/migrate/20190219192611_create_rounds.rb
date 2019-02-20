@@ -4,6 +4,7 @@ class CreateRounds < ActiveRecord::Migration[5.2]
       t.integer :color
       t.integer :winner
       t.float :total_amount
+      t.integer :state
       t.timestamps
     end
   end
