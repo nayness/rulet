@@ -2,12 +2,26 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">Fluid jumbotron</h1>
-    <%= link_to 'Turn the rulet!!', gamble_path(@round), class: "btn btn-warning btn-lg"%>
     <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
   </div>
 </div>
-<div class="col-md-8 offset-md-2">
-  <div class="progress" style="height: 20px;">
-    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="card text-center">
+  <div class="card-header">
+    Table: Round
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+      <div class="spinner-border text-warning d-none" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    <p class="text-success">Now Playing</p>
+    <div class="row">
+      <% @players.each do |player| %>
+        <div class = "col-md-2">
+          <h5>$<%= player.cash%></h5>
+          <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary'%>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -2,6 +2,7 @@ class RoundsController < ApplicationController
 
   def table
     @round = Round.new
+    @players = Player.random_players
   end
 
   def create
