@@ -5,7 +5,7 @@
     <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
   </div>
 </div>
-<div class="card text-center">
+<div class="card text-center" id="table">
   <div class="card-header">
     Table: Round
   </div>
@@ -15,13 +15,14 @@
         <span class="sr-only">Loading...</span>
       </div>
     <p class="text-success">Now Playing</p>
-    <div class="row">
+    <div class="row" id="round">
       <% @players.each do |player| %>
-        <div class = "col-md-2">
-          <h5>$<%= player.cash%></h5>
-          <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary'%>
+        <div class = "col-md-2 player">
+          <h5 class="bet">$<%= player.cash%></h5>
+          <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
         </div>
       <% end %>
     </div>
+    <button class="btn btn-warning btn-lg" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
   </div>
 </div>
