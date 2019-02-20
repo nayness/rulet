@@ -11,6 +11,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title"></h5>
+      <div class="timer"></div>
       <div class="spinner-border text-warning d-none" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -19,10 +20,13 @@
       <% @players.each do |player| %>
         <div class = "col-md-2 player">
           <h5 class="bet">$<%= player.cash%></h5>
-          <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+          <div class="row">
+            <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+            <div class="bet-color"></div>
+          </div>
         </div>
       <% end %>
     </div>
-    <button class="btn btn-warning btn-lg" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
+    <button class="btn btn-warning btn-lg d-none" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
   </div>
 </div>
