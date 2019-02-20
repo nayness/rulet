@@ -18,7 +18,14 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+set :environment, :development              #Configuración del entorno de desarrollo
+set :output, "#{path}/log/cron_log.logs"    #Ruta de la salida en un archivo llamado cron_logs.logs
+env :GEM_PATH, ENV['GEM_PATH']
 
-every 2.hours do
+every 3.minutes do
+  command "echo '-----Empieza la tarea-----'"      #Imprime mensaje en la salida cron_logs.logs
+  runner "Project.last.increase_worm_size"         #Ejecuta método dentro del proyecto
+  command "echo '-----Finaliza la tarea-----'"     #Imprime mensaje en la salida cron_logs.logs
+
   rake "player:gambles"
 end
