@@ -21,11 +21,22 @@ class PlayersController < ApplicationController
   def edit
   end
 
+  def add_player
+    player_name = Faker::Games::Zelda.character
+    player_email = Faker::Internet.email
+    @player = Player.new(name: player_name, email: player_email)
+    if @player.save
+      @gamble = Gamble.new(round_id: params[:round_id], player_id: @player.id)
+      if @gamble.save
+        render partial: 'add_player', layout: false, locals: { player: @player }
+      end
+    end
+  end
+
   # POST /players
   # POST /players.json
   def create
     @player = Player.new(player_params)
-
     respond_to do |format|
       if @player.save
         format.html { redirect_to @player, notice: 'Player was successfully created.' }

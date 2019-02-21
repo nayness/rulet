@@ -4,10 +4,10 @@ $(document).ready(function() {
     $('#gambles').on('click', function(){
       $('.spinner-border').removeClass('d-none');
       var players = $('#gambles').data('players');
-
+      var roundId = $('#new-player').data('round');
       $.ajax({
         type: 'POST',
-        url: '/gamble',
+        url: '/gamble/' + roundId ,
         data: { round: { players } },
         success: function(result) {
           $('.spinner-border').addClass('d-none');
@@ -29,6 +29,20 @@ $(document).ready(function() {
   // }, 180000);
 
   function getBetColor(color){
+    switch(color){
+      case 'green':
+        color = '#28a745';
+        break;
+      case 'red':
+        color = '#dc3545';
+        break;
+      default:
+        color = '#343a40';
+    }
+    return color;
+  }
+
+  function getRoundColor(color){
     switch(color){
       case 1:
         color = '#28a745';
@@ -55,9 +69,31 @@ $(document).ready(function() {
   }
 
   function loadResult(color){
-    var roundColor = getBetColor(color);
+    var roundColor = getRoundColor(color);
     $('#round-title').html('Round Result: ');
     $('.round-result').css('background-color', roundColor);
+  }
+
+  $('#new-player').on('click', function(){
+    addPlayer();
+  });
+
+  function addPlayer(){
+    var roundId = $('#new-player').data('round');
+    var roundPlayers = $('#new-player').data('players');
+    if (roundPlayers < 6){
+      $.ajax({
+        type: 'GET',
+        url: '/add_player/' + roundId,
+        success: function(result) {
+          $('#new-player').data('players', roundPlayers + 1);
+          $('#round').append(result);
+        }
+      });
+    }
+    else {
+      alert("You can't add more players. Round is full!");
+    }
   }
 
 
