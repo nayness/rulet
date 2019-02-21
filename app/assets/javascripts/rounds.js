@@ -1,35 +1,36 @@
 
 $(document).ready(function() {
   // setInterval(function() {
-    $('#gambles').on('click', function(){
-      $('.spinner-border').removeClass('d-none');
-      var players = $('#gambles').data('players');
-      // var roundId = $('#new-player').data('round');
-      // var currentRoundId = localStorage.setItem('currentRound', roundId);
-      var currentRound = localStorage.getItem('currentRound');
-      $.ajax({
-        type: 'POST',
-        url: '/gamble/' + currentRound ,
-        data: { round: { players } },
-        success: function(result) {
-          $('.spinner-border').addClass('d-none');
-          var players = $('.player');
-          var index = 0
-          var gambles = result.gambles
-          var newRoundId = result.new_round
-          players.each(function(){
-            $(this).find('.bet-amount').html('$' + gambles[index].amount)
-            betColor = getBetColor(gambles[index].color);
-            $(this).find('.row').find('.bet-color').css('background-color', betColor);
-            index +=1;
-          });
-          loadResult(result.round_color);
-          loadRounds();
-          clearPreviousRound();
-          localStorage.setItem('currentRound', newRoundId);
-        }
-      });
+  function gamble(){
+    alert('si entra T_T');
+    $('.spinner-border').removeClass('d-none');
+    var players = $('#gambles').data('players');
+    // var roundId = $('#new-player').data('round');
+    // var currentRoundId = localStorage.setItem('currentRound', roundId);
+    var currentRound = localStorage.getItem('currentRound');
+    $.ajax({
+      type: 'POST',
+      url: '/gamble/' + currentRound ,
+      data: { round: { players } },
+      success: function(result) {
+        $('.spinner-border').addClass('d-none');
+        var players = $('.player');
+        var index = 0
+        var gambles = result.gambles
+        var newRoundId = result.new_round
+        players.each(function(){
+          $(this).find('.bet-amount').html('$' + gambles[index].amount)
+          betColor = getBetColor(gambles[index].color);
+          $(this).find('.row').find('.bet-color').css('background-color', betColor);
+          index +=1;
+        });
+        loadResult(result.round_color);
+        loadRounds();
+        clearPreviousRound();
+        localStorage.setItem('currentRound', newRoundId);
+      }
     });
+  }
 
   // }, 180000);
 
@@ -117,17 +118,18 @@ $(document).ready(function() {
       $('#new-player').data('players', 0);
     }, 3000);
   }
-  // function timer(){
-  //   setInterval(function() {
-  //     var timerDistance = localStorage.getItem('timerDistance');
-  //     var minutes = Math.floor((timerDistance % (1000 * 60 * 60)) / (1000 * 60));
-  //     var seconds = Math.floor((timerDistance % (1000 * 60)) / 1000);
-  //     $('.timer').html(minutes + "m:" + seconds + "s.");
-  //     localStorage.setItem('timerDistance', timerDistance - 1000);
-  //     if (timerDistance == 0){
-  //       localStorage.setItem('timerDistance', 180000);
-  //     }
-  //   }, 1000);
-  // }
-  // timer();
+  function timer(){
+    setInterval(function() {
+      var timerDistance = localStorage.getItem('timerDistance');
+      var minutes = Math.floor((timerDistance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timerDistance % (1000 * 60)) / 1000);
+      $('.timer').html(minutes + "m:" + seconds + "s.");
+      localStorage.setItem('timerDistance', timerDistance - 1000);
+      if (timerDistance == 0){
+        localStorage.setItem('timerDistance', 180000);
+        gamble();
+      }
+    }, 1000);
+  }
+  timer();
 });

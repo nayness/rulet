@@ -6,8 +6,8 @@
       <p>
         <% round.winners.each do |gamble|%>
           <%= link_to gamble.player.name, player_path(gamble.player)%>
+          <span class="card-text text-success">: <%= gamble.player.cash%></span>
         <% end %>
       </p>
-      <p class="card-text text-success">Prize: <%= round.total_amount%></p>
     </div>
   </div>

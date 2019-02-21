@@ -12,11 +12,13 @@ class Round < ApplicationRecord
 
   def wins
     gambles.each do |gamble|
-      if player.color == color && color == 1
+      player = gamble.player
+      if gamble.color == color && color == 1
         player.cash += gamble.amount * 15
       else
         player.cash += gamble.amount * 2
       end
+      player.save
     end
   end
 

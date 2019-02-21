@@ -1,7 +1,7 @@
 
 <div class="card text-center" id="table">
   <div class ="row mb-3 mt-3 ml-5">
-    <h1 class="text-success"> Time remaining: <span class="timer">10m:0s</span></h1>
+    <h1 class="text-success"> Time remaining: <span class="timer"></span></h1>
     <span class="card-title ml-3" id="round-title"></span>
     <div class="round-result ml-3"></div>
   </div>
@@ -26,7 +26,6 @@
     </div>
     <div class="mt-3 mb-3">
       <button class="btn btn-success" id="new-player" data-players= "<%=@round.players.count%>"><span class="add-player">+ player</span></button>
-      <button class="btn btn-warning btn-lg" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
     </div>
   </div>
 </div>

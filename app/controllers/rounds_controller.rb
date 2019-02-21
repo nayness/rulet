@@ -24,6 +24,7 @@ class RoundsController < ApplicationController
     end
     @round.color = random_color.to_i
     @round.total_amount = @round.total_bet
+    @round.wins
     @round.save
     @round.gambles << @gambles
     @new_round = Round.create
