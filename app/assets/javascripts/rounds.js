@@ -11,7 +11,6 @@ $(document).ready(function() {
         data: { round: { players } },
         success: function(result) {
           $('.spinner-border').addClass('d-none');
-          console.log(result);
           var players = $('.player');
           var index = 0
           players.each(function(){
@@ -20,6 +19,7 @@ $(document).ready(function() {
             $(this).find('.row').find('.bet-color').css('background-color', betColor);
             index +=1;
           });
+          loadRounds();
         }
       });
     });
@@ -39,6 +39,23 @@ $(document).ready(function() {
     }
     return color;
   }
+
+  function loadRounds(){
+    if ($('.infinity-rounds').length > 0){
+      $.ajax({
+        type: 'GET',
+        url: '/infinite_rounds',
+        success: function(result) {
+          $('.infinity-rounds').append(result);
+        }
+      });
+    }
+  }
+
+  function loadResult(){
+
+  }
+
 
   // function timer(){
   //   setInterval(function() {
