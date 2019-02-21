@@ -1,4 +1,11 @@
-
+window.onload = function () {
+  if (localStorage.getItem("timerDistance") === null) {
+      localStorage.setItem("timerDistance", 180000);
+  }
+  if (localStorage.getItem("currentRound") === null) {
+    localStorage.setItem("currentRound", 1);
+  }
+}
 $(document).ready(function() {
   // setInterval(function() {
   function gamble(){
@@ -117,6 +124,7 @@ $(document).ready(function() {
       $('#new-player').data('players', 0);
     }, 3000);
   }
+
   function timer(){
     setInterval(function() {
       var timerDistance = localStorage.getItem('timerDistance');
