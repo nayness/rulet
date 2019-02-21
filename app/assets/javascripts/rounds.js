@@ -2,7 +2,6 @@
 $(document).ready(function() {
   // setInterval(function() {
   function gamble(){
-    alert('si entra T_T');
     $('.spinner-border').removeClass('d-none');
     var players = $('#gambles').data('players');
     // var roundId = $('#new-player').data('round');
