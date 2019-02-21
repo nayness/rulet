@@ -25,7 +25,7 @@ class RoundsController < ApplicationController
     @round.color = random_color
     @round.total_amount = @round.total_bet
     @round.save
-    render json: bets.to_json
+    render json: { round_color: @round.color, gambles: bets }
   end
 
   private

@@ -13,12 +13,14 @@ $(document).ready(function() {
           $('.spinner-border').addClass('d-none');
           var players = $('.player');
           var index = 0
+          var gambles = result.gambles
           players.each(function(){
-            $(this).find('.bet-amount').html('$' + result[index].amount)
-            betColor = getBetColor(result[index].color);
+            $(this).find('.bet-amount').html('$' + gambles[index].amount)
+            betColor = getBetColor(gambles[index].color);
             $(this).find('.row').find('.bet-color').css('background-color', betColor);
             index +=1;
           });
+          loadResult(result.round_color);
           loadRounds();
         }
       });
@@ -52,8 +54,10 @@ $(document).ready(function() {
     }
   }
 
-  function loadResult(){
-
+  function loadResult(color){
+    var roundColor = getBetColor(color);
+    $('#round-title').html('Round Result: ');
+    $('.round-result').css('background-color', roundColor);
   }
 
 
