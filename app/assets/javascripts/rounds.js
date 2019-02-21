@@ -96,7 +96,6 @@ $(document).ready(function() {
     }
   }
 
-
   // function timer(){
   //   setInterval(function() {
   //     var timerDistance = localStorage.getItem('timerDistance');

@@ -15,4 +15,20 @@ class Player < ApplicationRecord
       rand(8..15)/100.to_f
     end
   end
+
+  def gamble_color(round_id)
+    color = gambles.find_by(round_id: round_id).color
+    current_color(color)
+  end
+
+  def current_color(color)
+    case color
+    when 'green'
+      '#28a745'
+    when 'red'
+      '#dc3545'
+    else
+      '#343a40'
+    end
+  end
 end
