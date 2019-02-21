@@ -25,7 +25,7 @@
       <% end %>
     </div>
     <div class="mt-3 mb-3">
-      <button class="btn btn-success" id="new-player" data-round="<%=@round.id%>" data-players= "<%=@round.players.count%>"><span class="add-player">+ player</span></button>
+      <button class="btn btn-success" id="new-player" data-players= "<%=@round.players.count%>"><span class="add-player">+ player</span></button>
       <button class="btn btn-warning btn-lg" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
     </div>
   </div>

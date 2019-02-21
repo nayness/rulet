@@ -3,11 +3,11 @@ class RoundsController < ApplicationController
   def table
     @round = Round.last || Round.create
     @players = @round.players
-    @rounds = Round.order('id DESC').limit(30)
+    @rounds = Round.order('id DESC').limit(30).offset(1)
   end
 
   def infinite_rounds
-    @round = Round.last
+    @round = Round.find(params[:round_id])
     render partial: 'round', layout: false, locals: { round: @round }
   end
 
@@ -25,7 +25,9 @@ class RoundsController < ApplicationController
     @round.color = random_color.to_i
     @round.total_amount = @round.total_bet
     @round.save
-    render json: { round_color: @round.color, gambles: @gambles }
+    @round.gambles << @gambles
+    @new_round = Round.create
+    render json: { round_color: @round.color, gambles: @gambles, new_round: @new_round.id}
   end
 
   private

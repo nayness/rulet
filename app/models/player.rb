@@ -27,8 +27,10 @@ class Player < ApplicationRecord
       '#28a745'
     when 'red'
       '#dc3545'
-    else
+    when 'black'
       '#343a40'
+    else
+      '#E2E2E2'
     end
   end
 end

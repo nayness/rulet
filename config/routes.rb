@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root 'rounds#table'
   get '/table', to: 'rounds#table'
   post '/gamble/:round_id', to: 'rounds#create'
-  get '/infinite_rounds', to: 'rounds#infinite_rounds'
+  get '/infinite_rounds/:round_id', to: 'rounds#infinite_rounds'
   get '/add_player/:round_id', to: 'players#add_player'
 end
