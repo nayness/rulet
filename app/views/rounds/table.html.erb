@@ -9,7 +9,7 @@
     <div class="spinner-border text-warning d-none" role="status">
       <span class="sr-only">Loading...</span>
     </div>
-    <div class="row text-center pagination-centered" id="round">
+    <div class="row text-center pagination-centered" id="round" data-current-round="<%=@round.id%>">
       <% if @players %>
         <% @players.each do |player| %>
           <div class = "col-md-2 player">

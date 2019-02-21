@@ -3,7 +3,8 @@ window.onload = function () {
       localStorage.setItem("timerDistance", 180000);
   }
   if (localStorage.getItem("currentRound") === null) {
-    localStorage.setItem("currentRound", 1);
+    var currentRound = $('#round').data('current-round');
+    localStorage.setItem("currentRound", currentRound);
   }
 }
 $(document).ready(function() {
@@ -132,7 +133,7 @@ $(document).ready(function() {
       var seconds = Math.floor((timerDistance % (1000 * 60)) / 1000);
       $('.timer').html(minutes + "m:" + seconds + "s.");
       localStorage.setItem('timerDistance', timerDistance - 1000);
-      if (timerDistance == 0){
+      if (timerDistance <= 0){
         localStorage.setItem('timerDistance', 180000);
         gamble();
       }
