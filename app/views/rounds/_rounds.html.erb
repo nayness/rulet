@@ -1,0 +1,18 @@
+<div class="container mt-3">
+  <div class="card-columns">
+    <% @rounds.each do |round|%>
+      <div class="card">
+        <h5 class="card-header">Round: <%= round.id%></h5>
+        <div class="card-body">
+          <h5>Winners </h5>
+          <p>
+            <% round.winners.each do |gamble|%>
+              <%= link_to gamble.player.name, player_path(gamble.player)%>
+            <% end %>
+          </p>
+          <p class="card-text text-success">Prize: <%= round.total_amount%></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  </div>
