@@ -11,22 +11,26 @@
   </div>
   <div class="card-body">
     <h5 class="card-title"></h5>
-      <div class="timer"></div>
-      <div class="spinner-border text-warning d-none" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    <p class="text-success">Now Playing</p>
-    <div class="row" id="round">
+    <div class="row">
+      <h5 class="card-title text-success">Time Remaining: </h5>
+      <h5 class="carf-title timer"></h5>
+    </div>
+    <div class="spinner-border text-warning d-none" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row text-center pagination-centered" id="round">
       <% @players.each do |player| %>
         <div class = "col-md-2 player">
-          <h5 class="bet">$<%= player.cash%></h5>
+          <h5 class="bet-amount">$<%= player.cash%></h5>
           <div class="row">
-            <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+            <div class="col-md-8">
+              <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+            </div>
             <div class="bet-color"></div>
           </div>
         </div>
       <% end %>
     </div>
-    <button class="btn btn-warning btn-lg d-none" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
+    <button class="btn btn-warning btn-lg" id="gambles" data-players="<%=@players.pluck(:id) %>"> Spin me! </button>
   </div>
 </div>

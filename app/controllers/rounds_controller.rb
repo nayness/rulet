@@ -14,7 +14,7 @@ class RoundsController < ApplicationController
       color = player.random_color
       @gamble = Gamble.new(player_id: player.id, round_id: @round.id,
                 amount: amount, percentage: percentage, color: color)
-      bets << amount if @gamble.save
+      bets << { amount: amount, color: color } if @gamble.save
     end
     render json: bets.to_json
   end
