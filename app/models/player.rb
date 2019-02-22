@@ -12,7 +12,9 @@ class Player < ApplicationRecord
     if cash <=1000
       100
     else
-      rand(8..15)/100.to_f
+      forcast_service = ForcastService.new
+      max_temperatures = forcast_service.weekly_max_temperatures
+      max_temperatures.size > 0 ? rand(3..7)/100.to_f : rand(8..15)/100.to_f
     end
   end
 
