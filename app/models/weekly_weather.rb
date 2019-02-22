@@ -1,0 +1,2 @@
+class WeeklyWeather < ApplicationRecord
+end
