@@ -2,14 +2,19 @@
   <div class="card-columns">
     <% @rounds.each do |round|%>
       <div class="card">
-        <h5 class="card-header">Round: <%= round.id%></h5>
+        <div class="card-header">
+          <div class="row">
+            <p><div class="ml-3 mr-3 round-color"style="background-color:<%= round.color_hex%>"></div></p>
+            <h5 class="text-dark">Round <%= round.id%></h5>
+          </div>
+        </div>
         <div class="card-body">
-          <h5>Winners </h5>
-          <p>
+          <p><span class="text-dark font-weight-bold">winners:</span>
             <% round.winners.each do |gamble|%>
-              <%= link_to gamble.player.name, player_path(gamble.player)%>
-              <span class="card-text text-success">: <%= gamble.player.cash%></span>
+              <%= link_to gamble.player.name, player_path(gamble.player), class: 'text-secondary'%>
+              <span class="card-text text-info">$<%= gamble.player.cash%></span>
             <% end %>
+            <p class="text-success"><span class="text-dark font-weight-bold">total prize: </span>$<%= round.total_amount%></p>
           </p>
         </div>
       </div>

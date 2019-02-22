@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
     end
     colors_probabilities.sample
   end
+
 end

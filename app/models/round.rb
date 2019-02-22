@@ -30,4 +30,17 @@ class Round < ApplicationRecord
     WeeklyWeather.last
   end
 
+  def color_hex
+    case color
+    when 1
+      '#28a745'
+    when 2
+      '#dc3545'
+    when 3
+      '#343a40'
+    else
+      '#E2E2E2'
+    end
+  end
+
 end

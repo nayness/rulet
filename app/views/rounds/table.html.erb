@@ -13,28 +13,26 @@
       </div>
     </div>
 
-    <div class="row pl-5" id="round" data-current-round="<%=@round.id%>">
-      <% if @players %>
-        <% @players.each do |player| %>
-          <div class="player">
-            <div class="col-md-12">
-              <%= link_to player.name, player_path(player), class: 'card-link text-center' %>
-              <h5 class="bet-amount">cash: $<%= player.cash%></h5>
-              <h5 class="bet-amount">bet: $<%= player.cash%></h5>
-              <div class="row">
-                <h5 class="ml-3">color: </h5>
-                <div class="bet-color ml-3" style="background-color: <%=player.gamble_color(@round.id)%>"></div>
-              </div>
+  <div class="row pl-5" id="round" data-current-round="<%=@round.id%>">
+    <% if @players %>
+      <% @players.each do |player| %>
+        <div class="player">
+          <div class="col-md-12">
+            <div class="row">
+              <%= link_to player.name, player_path(player), class: 'btn btn-info' %>
+              <div class="bet-color ml-3" style="background-color: <%=player.gamble_color(@round.id)%>"></div>
             </div>
+            <h5 class="text-dark pt-3">cash: $<%= player.cash%></h5>
+            <h5 class="text-dark bet-amount">bet: $0</h5>
           </div>
-        <% end %>
+        </div>
       <% end %>
-    </div>
-      <div class="mt-3 mb-3"></div>
-    </div>
+    <% end %>
+  </div>
   </div>
 </div>
 <div class="container mt-3">
-<div class="card-columns infinity-rounds"></div>
+  <h2 class="text-center">Previous rounds</h2>
+  <div class="card-columns infinity-rounds"></div>
 </div>
 <%= render 'rounds'%>

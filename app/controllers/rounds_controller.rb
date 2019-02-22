@@ -16,8 +16,8 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:round_id])
     @gambles = @round.gambles
     @gambles.each do |gamble|
-      percentage = player.bet_percentage(@round.weekly_weather)
       player = Player.find(gamble.player_id)
+      percentage = player.bet_percentage(@round.weekly_weather)
       gamble.amount = (player.cash * percentage).round(1)
       gamble.color = random_color
       gamble.percentage = percentage
