@@ -1,9 +1,11 @@
-<div class = "col-md-2 player">
-  <h5 class="bet-amount">$<%= player.cash%></h5>
-  <div class="row">
-    <div class="col-md-8">
-      <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+<% @players.each do |player|%>
+  <div class = "col-md-2 player">
+    <h5 class="bet-amount">$<%= player.cash%></h5>
+    <div class="row">
+      <div class="col-md-8">
+        <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+      </div>
+      <div class="bet-color"></div>
     </div>
-    <div class="bet-color"></div>
   </div>
-</div>
+<% end %>

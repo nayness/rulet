@@ -21,16 +21,18 @@ class PlayersController < ApplicationController
   def edit
   end
 
-  def add_player
-    player_name = Faker::Games::Zelda.character
-    player_email = Faker::Internet.email
-    @player = Player.new(name: player_name, email: player_email)
-    if @player.save
-      @gamble = Gamble.new(round_id: params[:round_id], player_id: @player.id)
-      if @gamble.save
-        render partial: 'add_player', layout: false, locals: { player: @player }
+  def add_players
+    6.times do |i|
+      player_name = Faker::Games::Zelda.character
+      player_email = Faker::Internet.email
+      @player = Player.new(name: player_name, email: player_email)
+      if @player.save
+        @gamble = Gamble.create(round_id: params[:round_id], player_id: @player.id)
       end
     end
+    @round = Round.find(params[:round_id])
+    @players = @round.players
+    render partial: 'add_player', layout: false, locals: { players: @players }
   end
 
   # POST /players

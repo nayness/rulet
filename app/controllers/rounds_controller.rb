@@ -22,7 +22,7 @@ class RoundsController < ApplicationController
       gamble.percentage = percentage
       gamble.save
     end
-    @round.color = random_color.to_i
+    @round.color = random_color
     @round.total_amount = @round.total_bet
     @round.wins
     @round.save

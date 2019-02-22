@@ -1,3 +1,4 @@
+/* Initial setup for firstime page load */
 window.onload = function () {
   if (localStorage.getItem("timerDistance") === null) {
       localStorage.setItem("timerDistance", 180000);
@@ -8,15 +9,14 @@ window.onload = function () {
   }
 }
 $(document).ready(function() {
+
+  /* get and renders round gambles on main page*/
   function gamble(){
-    var players = $('#gambles').data('players');
     var currentRound = localStorage.getItem('currentRound');
     $.ajax({
       type: 'POST',
       url: '/gamble/' + currentRound ,
-      data: { round: { players } },
       success: function(result) {
-        $('.spinner-border').addClass('d-none');
         var players = $('.player');
         var index = 0
         var gambles = result.gambles
@@ -27,18 +27,12 @@ $(document).ready(function() {
           $(this).find('.row').find('.bet-color').css('background-color', betColor);
           index +=1;
         });
-        loadResult(result.round_color);
-        loadRounds();
-        clearPreviousRound();
+        displayRoundResult(result.round_color);
+        loadLastRound();
         localStorage.setItem('currentRound', newRoundId);
+        clearPreviousRound();
       }
     });
-  }
-
-  function randomColor(){
-    var randomNumber = Math.random() * (3 - 1) + 1;
-    var randomColor = parseInt(randomNumber);
-    return randomColor;
   }
 
   function getBetColor(color){
@@ -69,7 +63,7 @@ $(document).ready(function() {
     return color;
   }
 
-  function loadRounds(){
+  function loadLastRound(){
     if ($('.infinity-rounds').length > 0){
       var currentRound = localStorage.getItem('currentRound');
       $.ajax({
@@ -82,37 +76,27 @@ $(document).ready(function() {
     }
   }
 
-  function loadResult(color){
+  function displayRoundResult(color){
     var roundColor = getRoundColor(color);
     $('#round-title').html('Round Result: ');
     $('.round-result').css('background-color', roundColor);
   }
 
-  function loadNewRound(){
+  function loadNewRound(roundId){
     $('#round-title').html('New Round: ');
     $('.round-result').css('background-color', '#E2E2E2');
+    addPlayers();
   }
 
-  $('#new-player').on('click', function(){
-    addPlayer();
-  });
-
-  function addPlayer(){
+  function addPlayers(){
     var roundId = localStorage.getItem('currentRound');
-    var roundPlayers = $('#new-player').data('players');
-    if (roundPlayers < 6){
-      $.ajax({
-        type: 'GET',
-        url: '/add_player/' + roundId,
-        success: function(result) {
-          $('#new-player').data('players', roundPlayers + 1);
-          $('#round').append(result);
-        }
-      });
-    }
-    else {
-      alert("You can't add more players. Round is full!");
-    }
+    $.ajax({
+      type: 'GET',
+      url: '/add_players/' + roundId,
+      success: function(result) {
+        $('#round').prepend(result);
+      }
+    });
   }
 
   function clearPreviousRound(){
@@ -122,10 +106,10 @@ $(document).ready(function() {
         previousRound.removeChild(previousRound.firstChild);
       }
       loadNewRound();
-      $('#new-player').data('players', 0);
     }, 3000);
   }
 
+  /* start timer so it counts 3 mins*/
   function timer(){
     setInterval(function() {
       var timerDistance = localStorage.getItem('timerDistance');
