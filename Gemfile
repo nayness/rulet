@@ -15,6 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'faker'
 gem 'jquery-rails'
 gem 'figaro'
+gem 'forecast_io'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
