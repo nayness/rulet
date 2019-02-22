@@ -26,4 +26,8 @@ class Round < ApplicationRecord
     gambles.where(color: color)
   end
 
+  def weekly_weather
+    WeeklyWeather.last
+  end
+
 end

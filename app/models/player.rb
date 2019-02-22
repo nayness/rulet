@@ -7,14 +7,12 @@ class Player < ApplicationRecord
 
   scope :random_players, ->{ Player.offset(rand(Player.count) - 6).limit(6) }
 
-  def bet_percentage
+  def bet_percentage(week_weather)
     return 0 if cash <= 0
     if cash <=1000
       100
     else
-      forcast_service = ForcastService.new
-      max_temperatures = forcast_service.weekly_max_temperatures
-      max_temperatures.size > 0 ? rand(3..7)/100.to_f : rand(8..15)/100.to_f
+      week_weather.max_temperature > 19 ? rand(3..7)/100.to_f : rand(8..15)/100.to_f
     end
   end
 

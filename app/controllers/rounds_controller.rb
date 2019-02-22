@@ -4,6 +4,7 @@ class RoundsController < ApplicationController
     @round = Round.last || Round.create
     @players = @round.players
     @rounds = Round.order('id DESC').limit(30).offset(1)
+    @weekly_weather = @round.weekly_weather
   end
 
   def infinite_rounds
@@ -15,7 +16,7 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:round_id])
     @gambles = @round.gambles
     @gambles.each do |gamble|
-      percentage = rand(0..8)/100.to_f
+      percentage = player.bet_percentage(@round.weekly_weather)
       player = Player.find(gamble.player_id)
       gamble.amount = (player.cash * percentage).round(1)
       gamble.color = random_color
