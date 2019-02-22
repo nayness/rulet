@@ -8,12 +8,8 @@ window.onload = function () {
   }
 }
 $(document).ready(function() {
-  // setInterval(function() {
   function gamble(){
-    $('.spinner-border').removeClass('d-none');
     var players = $('#gambles').data('players');
-    // var roundId = $('#new-player').data('round');
-    // var currentRoundId = localStorage.setItem('currentRound', roundId);
     var currentRound = localStorage.getItem('currentRound');
     $.ajax({
       type: 'POST',
@@ -39,7 +35,11 @@ $(document).ready(function() {
     });
   }
 
-  // }, 180000);
+  function randomColor(){
+    var randomNumber = Math.random() * (3 - 1) + 1;
+    var randomColor = parseInt(randomNumber);
+    return randomColor;
+  }
 
   function getBetColor(color){
     switch(color){
@@ -139,5 +139,5 @@ $(document).ready(function() {
       }
     }, 1000);
   }
-  timer();
+  // timer();
 });
