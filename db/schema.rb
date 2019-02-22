@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_22_114550) do
+ActiveRecord::Schema.define(version: 2019_02_22_171552) do
 
   create_table "gambles", force: :cascade do |t|
     t.integer "player_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_114550) do
     t.integer "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "prize"
     t.index ["player_id", "round_id"], name: "index_gambles_on_player_id_and_round_id", unique: true
   end
 
