@@ -1,4 +1,6 @@
 class Player < ApplicationRecord
+  include RoundCommons
+
   has_many :gambles
   has_many :rounds, through: :gambles
 
@@ -18,19 +20,7 @@ class Player < ApplicationRecord
 
   def gamble_color(round_id)
     color = gambles.find_by(round_id: round_id).color
-    current_color(color)
+    color_hex(color)
   end
 
-  def current_color(color)
-    case color
-    when 'green'
-      '#28a745'
-    when 'red'
-      '#dc3545'
-    when 'black'
-      '#343a40'
-    else
-      '#E2E2E2'
-    end
-  end
 end

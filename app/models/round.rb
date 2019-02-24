@@ -1,4 +1,6 @@
 class Round < ApplicationRecord
+  include RoundCommons
+
   has_many :gambles
   has_many :players, through: :gambles
 
@@ -6,19 +8,20 @@ class Round < ApplicationRecord
 
   COLORS = [[1,2],[2,49],[3,49]].freeze
 
+  enum color: [:green, :red, :black]
+
   def total_bet
     gambles.sum(:amount)
   end
 
   def wins
     gambles.each do |gamble|
-      player = gamble.player
       if gamble.color == color && color == 1
-        player.cash += gamble.amount * 15
+        gamble.prize = gamble.player.cash + gamble.amount * 15
       else
-        player.cash += gamble.amount * 2
+        gamble.prize = gamble.player.cash + gamble.amount * 2
       end
-      player.save
+      gamble.save
     end
   end
 
@@ -28,19 +31,6 @@ class Round < ApplicationRecord
 
   def weekly_weather
     WeeklyWeather.last
-  end
-
-  def color_hex
-    case color
-    when 1
-      '#28a745'
-    when 2
-      '#dc3545'
-    when 3
-      '#343a40'
-    else
-      '#E2E2E2'
-    end
   end
 
 end

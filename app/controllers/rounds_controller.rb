@@ -1,5 +1,6 @@
 class RoundsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :create
+
   def table
     @round = Round.last || Round.create
     @players = @round.players
@@ -19,11 +20,11 @@ class RoundsController < ApplicationController
       player = Player.find(gamble.player_id)
       percentage = player.bet_percentage(@round.weekly_weather)
       gamble.amount = (player.cash * percentage).round(1)
-      gamble.color = random_color
+      gamble.color = player.random_color
       gamble.percentage = percentage
       gamble.save
     end
-    @round.color = random_color
+    @round.color = @round.random_color
     @round.total_amount = @round.total_bet
     @round.wins
     @round.save
