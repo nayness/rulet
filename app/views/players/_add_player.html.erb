@@ -1,11 +1,13 @@
 <% @players.each do |player|%>
-  <div class = "col-md-2 player">
-    <h5 class="bet-amount">$<%= player.cash%></h5>
-    <div class="row">
-      <div class="col-md-8">
-        <%= link_to player.name, player_path(player), class: 'btn btn-outline-primary' %>
+  <div class="player" >
+    <div class="col-md-12">
+      <div class="row">
+        <%= link_to player.name, player_path(player), class: 'btn btn-info' %>
+        <div class="bet-color ml-3" style="background-color: <%=player.gamble_color(@round.id)%>"></div>
       </div>
-      <div class="bet-color"></div>
+      <h5 class="text-dark pt-3 cash">cash: $<%= player.cash%></h5>
+      <h5 class="text-dark bet-amount">bet: $0</h5>
+      <h5 class="text-dark prize">prize: $<%= player.prize(@round.id)%></h5>
     </div>
   </div>
 <% end %>
