@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a demo simulation of a monitoring system in a casino for rulet players. The rulet spins automatically every 3 mins, players make their bets and winners of each round are shown once the round ends in the main page.
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+First you must create a file application.yml manually and add it to config folder or
 
-* System dependencies
+     $ bundle exec figaro install
 
-* Configuration
+Then you'll need to create an account at https://darksky.net/dev and add your api key in application.yml
+    
+    forcast_api_key: 'YOUR_KEY_HERE'
 
-* Database creation
+Finally run the task
 
-* Database initialization
+    $ rake weekly_weather:fetch_max_temperature
 
-* How to run the test suite
+* Ruby version 2.5.3
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
