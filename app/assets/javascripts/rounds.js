@@ -140,13 +140,20 @@ $(document).ready(function() {
         addPlayers();
       }
       if (timerDistance == 170000){
+        $('#feedback').html("Players are gambling ...");
+        $('#feedback-time').html('please wait 2 minutes');
         gamble();
       }
       if (timerDistance == 10000){
-        loadRoundColor();
         clearPreviousRound();
+        $('#feedback').html("Rulet is spining!");
+        $('#feedback-time').html('please wait 5 seconds...');
+        $('#rulet').removeClass('d-none');
       }
       if (timerDistance == 5000){
+        $('#rulet').addClass('d-none');
+        $('#feedback').html("");
+        $('#feedback-time').html('');
         loadWinners();
       }
       if (timerDistance <= 0){
@@ -154,6 +161,8 @@ $(document).ready(function() {
         createNewRound();
         loadLastRound();
         clearWinners();
+        $('#feedback').html("New round is starting!");
+        $('#feedback-time').html('please wait 5 seconds');
       }
     }, 1000);
   }

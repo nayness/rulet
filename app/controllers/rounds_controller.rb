@@ -29,7 +29,7 @@ class RoundsController < ApplicationController
     @round.wins
     @round.save
     @gambles = @round.winners
-    render partial: 'players/winners', layout: false, locals: { gambles: @gambles }
+    render partial: 'players/winners', layout: false, locals: { gambles: @gambles, round: @round }
   end
 
   def gamble

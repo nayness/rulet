@@ -5,12 +5,20 @@
       <h2 class="pl-5"><i>Zelda Players</i></h2>
       <div class= "row ml-1 mr-1">
         <h3 class="text-success  ml-3 mr-3 timer">...</h3>
-        <span class="card-title ml-3" id="round-title"></span>
-        <div class="row" id="round-rulet">
-        </div>
       </div>
     </div>
-  <p class="pl-5 text-secondary"><i>Welcome! </i>Here you can monitor this table rounds & players</p>
+    <p class="pl-5 text-secondary"><i>Welcome! </i>Here you can monitor this table rounds & players</p>
+    <div class="col-md-8 offset-md-4">
+      <div class="row">
+        <h3 class="text-info pl-2 pr-5" id="feedback"></h3>
+        <div class="spinner-border text-warning d-none" role="status" id="rulet">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <p class="text-secondary pl-5" id="feedback-time"><i></i></p>
+    </div>
+    <div class="row pl-5" id="round-rulet">
+    </div>
   <div class="row pl-5" id="round" data-current-round="<%=@round.id%>">
     <% if @players %>
       <% @players.each do |player| %>
