@@ -4,7 +4,13 @@ window.onload = function () {
   if ( timer === null || timer === "undefined" ) {
       localStorage.setItem("timerDistance", 180000);
   }
+  if ( localStorage.getItem("feedback") === null){
+    localStorage.setItem('feedback', '');
+  }
+  var feedback = localStorage.getItem('feedback');
+  $('#feedback').html(feedback);
 }
+
 $(document).ready(function() {
 
   var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
@@ -140,13 +146,17 @@ $(document).ready(function() {
         addPlayers();
       }
       if (timerDistance == 170000){
-        $('#feedback').html("Players are gambling ...");
+        localStorage.setItem('feedback', 'Players are gambling ...!');
+        var feedback = localStorage.getItem('feedback');
+        $('#feedback').html(feedback);
         $('#feedback-time').html('please wait 2 minutes');
         gamble();
       }
       if (timerDistance == 10000){
         clearPreviousRound();
-        $('#feedback').html("Rulet is spining!");
+        localStorage.setItem('feedback', 'Rulet is spining!');
+        var feedback = localStorage.getItem('feedback');
+        $('#feedback').html(feedback);
         $('#feedback-time').html('please wait 5 seconds...');
         $('#rulet').removeClass('d-none');
       }
@@ -161,7 +171,9 @@ $(document).ready(function() {
         createNewRound();
         loadLastRound();
         clearWinners();
-        $('#feedback').html("New round is starting!");
+        localStorage.setItem('feedback', 'New round is starting!');
+        var feedback = localStorage.getItem('feedback');
+        $('#feedback').html(feedback);
         $('#feedback-time').html('please wait 5 seconds');
       }
     }, 1000);
