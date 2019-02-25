@@ -24,7 +24,18 @@ class Player < ApplicationRecord
   end
 
   def prize(round_id)
-    gambles.find_by(round_id: round_id, player_id: id ).prize
+    prize = gamble(round_id).prize
+    return prize if prize
+    0
   end
 
+  def bet(round_id)
+    amount = gamble(round_id).amount
+    return amount if amount
+    0
+  end
+
+  def gamble(round_id)
+    gamble = gambles.find_by(round_id: round_id, player_id: id)
+  end
 end

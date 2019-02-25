@@ -25,7 +25,7 @@ $(document).ready(function() {
         var index = 0
         var gambles = result.gambles
         $('.player').each(function(){
-          $(this).find('.bet-amount').html('$' + gambles[index].amount);
+          $(this).find('.bet-amount').html('bet: $' + gambles[index].amount);
           betColor = getBetColor(gambles[index].color);
           $(this).find('.row').find('.bet-color').css('background-color', betColor);
           index +=1;
