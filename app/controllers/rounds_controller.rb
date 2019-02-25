@@ -1,20 +1,38 @@
 class RoundsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :create
+  before_action :set_current_round, only: [:table, :create, :winners, :gamble]
 
   def table
-    @round = Round.last || Round.create
     @players = @round.players
-    @rounds = Round.order('id DESC').limit(30).offset(1)
+    @rounds = Round.closed
     @weekly_weather = @round.weekly_weather
+    @gambles = @round.winners
   end
 
   def infinite_rounds
-    @round = Round.find(params[:round_id])
+    @round = Round.closed.first
     render partial: 'round', layout: false, locals: { round: @round }
   end
 
   def create
-    @round = Round.find(params[:round_id])
+    @round.state = 1
+    if @round.save
+      Round.create
+      render json: {}, status: :ok
+    else
+      render json: @round.errors, status: :unprocessable_entity
+    end
+  end
+
+  def winners
+    @round.color = @round.random_color
+    @round.total_amount = @round.total_bet
+    @round.wins
+    @round.save
+    @gambles = @round.winners
+    render partial: 'players/winners', layout: false, locals: { gambles: @gambles }
+  end
+
+  def gamble
     @gambles = @round.gambles
     @gambles.each do |gamble|
       player = Player.find(gamble.player_id)
@@ -24,17 +42,20 @@ class RoundsController < ApplicationController
       gamble.percentage = percentage
       gamble.save
     end
-    @round.color = @round.random_color
-    @round.total_amount = @round.total_bet
-    @round.wins
-    @round.save
-    @round.gambles << @gambles
-    @new_round = Round.create
-    render json: { round_color: @round.color, gambles: @gambles, new_round: @new_round.id}
+    render json: { gambles: @gambles }
+  end
+
+
+  def last_round
+    @round = Round.closed.first
+    render json: { color: @round.color }
   end
 
   private
 
+  def set_current_round
+    @round = Round.open.last  || Round.create
+  end
   def round_params
     params.require(:round).permit(players: [])
   end

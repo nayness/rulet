@@ -4,26 +4,30 @@
     <div class="row">
       <h2 class="pl-5"><i>Zelda Players</i></h2>
       <div class= "row ml-1 mr-1">
-        <h3 class="text-success  ml-3 mr-3 timer">3m:0s</h3>
+        <h3 class="text-success  ml-3 mr-3 timer">...</h3>
         <span class="card-title ml-3" id="round-title"></span>
-        <div class="row ml-5 round-rulet d-none">
-          <h3>round result: </h3>
-          <div class="round-result ml-3"></div>
+        <div class="row" id="round-rulet">
         </div>
       </div>
     </div>
-
+  <p class="pl-5 text-secondary"><i>Welcome! </i>Here you can monitor this table rounds & players</p>
   <div class="row pl-5" id="round" data-current-round="<%=@round.id%>">
     <% if @players %>
       <% @players.each do |player| %>
         <div class="player">
           <div class="col-md-12">
+            <%# <div class="row clearfix">
+              <button type="button" class="close float-right" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> %>
             <div class="row">
               <%= link_to player.name, player_path(player), class: 'btn btn-info' %>
               <div class="bet-color ml-3" style="background-color: <%=player.gamble_color(@round.id)%>"></div>
             </div>
-            <h5 class="text-dark pt-3">cash: $<%= player.cash%></h5>
+            <h5 class="text-dark pt-3 cash">cash: $<%= player.cash%></h5>
             <h5 class="text-dark bet-amount">bet: $0</h5>
+            <h5 class="text-dark prize">prize: $<%= player.prize(@round.id)%></h5>
           </div>
         </div>
       <% end %>

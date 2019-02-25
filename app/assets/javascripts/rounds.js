@@ -1,36 +1,33 @@
 /* Initial setup for firstime page load */
 window.onload = function () {
-  if (localStorage.getItem("timerDistance") === null) {
+  var timer = localStorage.getItem("timerDistance");
+  if ( timer === null || timer === "undefined" ) {
       localStorage.setItem("timerDistance", 180000);
   }
-  if (localStorage.getItem("currentRound") === null) {
-    var currentRound = $('#round').data('current-round');
-    localStorage.setItem("currentRound", currentRound);
-  }
+  // if (localStorage.getItem("firstPlayers") === null) {
+  //   addPlayers();
+  //   localStorage.setItem("firstLPayers", true);
+  // }
 }
 $(document).ready(function() {
 
+  var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+
   /* get and renders round gambles on main page*/
   function gamble(){
-    var currentRound = localStorage.getItem('currentRound');
     $.ajax({
       type: 'POST',
-      url: '/gamble/' + currentRound ,
+      headers: { 'X_CSRF_TOKEN': AUTH_TOKEN },
+      url: '/gamble',
       success: function(result) {
-        var players = $('.player');
         var index = 0
         var gambles = result.gambles
-        var newRoundId = result.new_round
-        players.each(function(){
-          $(this).find('.bet-amount').html('$' + gambles[index].amount)
+        $('.player').each(function(){
+          $(this).find('.bet-amount').html('$' + gambles[index].amount);
           betColor = getBetColor(gambles[index].color);
           $(this).find('.row').find('.bet-color').css('background-color', betColor);
           index +=1;
         });
-        displayRoundResult(result.round_color);
-        loadLastRound();
-        localStorage.setItem('currentRound', newRoundId);
-        clearPreviousRound();
       }
     });
   }
@@ -63,12 +60,22 @@ $(document).ready(function() {
     return color;
   }
 
+  function createNewRound(){
+    $.ajax({
+      type: 'POST',
+      headers: { 'X_CSRF_TOKEN': AUTH_TOKEN },
+      url: '/new_round',
+      success: function(result) {
+        console.log('New Round created');
+      }
+    });
+  }
+
   function loadLastRound(){
     if ($('.infinity-rounds').length > 0){
-      var currentRound = localStorage.getItem('currentRound');
       $.ajax({
         type: 'GET',
-        url: '/infinite_rounds/' + currentRound,
+        url: '/infinite_rounds',
         success: function(result) {
           $('.infinity-rounds').append(result);
         }
@@ -76,23 +83,23 @@ $(document).ready(function() {
     }
   }
 
-  function displayRoundResult(color){
-    var roundColor = getRoundColor(color);
-    $('#round-title').html('Round Result: ');
-    $('.round-result').css('background-color', roundColor);
-  }
-
-  function loadNewRound(roundId){
-    $('#round-title').html('New Round: ');
-    $('.round-result').css('background-color', '#E2E2E2');
-    addPlayers();
+  function loadRoundColor(){
+    $.ajax({
+      type: 'GET',
+      headers: { 'X_CSRF_TOKEN': AUTH_TOKEN },
+      url: '/last_round',
+      success: function(result) {
+        var roundColor = getRoundColor(result.color);
+        $('.round-result').css('background-color', roundColor);
+      }
+    });
   }
 
   function addPlayers(){
-    var roundId = localStorage.getItem('currentRound');
     $.ajax({
-      type: 'GET',
-      url: '/add_players/' + roundId,
+      type: 'POST',
+      headers: { 'X_CSRF_TOKEN': AUTH_TOKEN },
+      url: '/add_players',
       success: function(result) {
         $('#round').prepend(result);
       }
@@ -100,13 +107,29 @@ $(document).ready(function() {
   }
 
   function clearPreviousRound(){
+    $('.round-result').css('background-color', '#FFFFFF');
     var previousRound = document.getElementById("round");
-    setTimeout(function(){
-      while (previousRound.firstChild) {
-        previousRound.removeChild(previousRound.firstChild);
+    while (previousRound.firstChild) {
+      previousRound.removeChild(previousRound.firstChild);
+    }
+  }
+
+  function clearWinners(){
+    var winners = $('#round-rulet');
+    while (winners.firstChild) {
+      winners.removeChild(winners.firstChild);
+    }
+  }
+
+  function loadWinners(){
+    $.ajax({
+      type: 'POST',
+      headers: { 'X_CSRF_TOKEN': AUTH_TOKEN },
+      url: '/round_winners',
+      success: function(result) {
+        $('#round-rulet').append(result);
       }
-      loadNewRound();
-    }, 3000);
+    });
   }
 
   /* start timer so it counts 3 mins*/
@@ -117,9 +140,24 @@ $(document).ready(function() {
       var seconds = Math.floor((timerDistance % (1000 * 60)) / 1000);
       $('.timer').html(minutes + "m:" + seconds + "s.");
       localStorage.setItem('timerDistance', timerDistance - 1000);
+      if (timerDistance == 175000){
+        addPlayers();
+      }
+      if (timerDistance == 170000){
+        gamble();
+      }
+      if (timerDistance == 10000){
+        loadRoundColor();
+        clearPreviousRound();
+      }
+      if (timerDistance == 5000){
+        loadWinners();
+      }
       if (timerDistance <= 0){
         localStorage.setItem('timerDistance', 180000);
-        gamble();
+        createNewRound();
+        loadLastRound();
+        clearWinners();
       }
     }, 1000);
   }

@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'rounds#table'
   get '/table', to: 'rounds#table'
-  post '/gamble/:round_id', to: 'rounds#create'
-  get '/infinite_rounds/:round_id', to: 'rounds#infinite_rounds'
-  get '/add_players/:round_id', to: 'players#add_players'
+  post '/gamble', to: 'rounds#gamble'
+  get '/infinite_rounds', to: 'rounds#infinite_rounds'
+  post '/add_players', to: 'players#add_players'
+  get '/add_players', to: 'players#add_players'
+  get '/last_round', to: 'rounds#last_round'
+  post '/new_round', to: 'rounds#create'
+  post '/round_winners', to: 'rounds#winners'
 end

@@ -23,4 +23,8 @@ class Player < ApplicationRecord
     color_hex(color)
   end
 
+  def prize(round_id)
+    gambles.find_by(round_id: round_id, player_id: id ).prize
+  end
+
 end

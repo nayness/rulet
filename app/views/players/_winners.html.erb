@@ -1,0 +1,20 @@
+
+<div class="col-md-12">
+  <h3>Winners!</h3>
+  <div class="round-result ml-3"></div>
+</div>
+<div class="row round-winners">
+<% @gambles.each do |gamble|%>
+  <div class="winner">
+    <div class="col-md-12">
+      <div class="row">
+        <%= link_to gamble.player.name, player_path(gamble.player), class: 'btn btn-info' %>
+        <div class="bet-color ml-3" style="background-color: <%=gamble.color_hex(gamble.color)%>"></div>
+      </div>
+      <h5 class="text-dark pt-3 cash">cash: $<%= gamble.player.cash%></h5>
+      <h5 class="text-dark bet-amount">bet: $0</h5>
+      <h5 class="text-dark prize">prize: $<%= gamble.prize%></h5>
+    </div>
+  </div>
+<% end %>
+</div>

@@ -4,7 +4,9 @@ class Round < ApplicationRecord
   has_many :gambles
   has_many :players, through: :gambles
 
-  scope :winners, -> { players.where(color: color)}
+  scope :winners, -> { players.where(color: color) }
+  scope :open, -> { where(state: 0) }
+  scope :closed, -> { where(state: 1).order('id DESC') }
 
   COLORS = [[1,2],[2,49],[3,49]].freeze
 
@@ -32,5 +34,4 @@ class Round < ApplicationRecord
   def weekly_weather
     WeeklyWeather.last
   end
-
 end

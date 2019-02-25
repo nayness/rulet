@@ -22,16 +22,18 @@ class PlayersController < ApplicationController
   end
 
   def add_players
-    6.times do |i|
-      player_name = Faker::Games::Zelda.character
-      player_email = Faker::Internet.email
-      @player = Player.new(name: player_name, email: player_email)
-      if @player.save
-        @gamble = Gamble.create(round_id: params[:round_id], player_id: @player.id)
+    @round = Round.open.last
+    if @round.players.count < 7
+      6.times do |i|
+        player_name = Faker::Games::Zelda.character
+        player_email = Faker::Internet.email
+        @player = Player.new(name: player_name, email: player_email)
+        if @player.save
+          @gamble = Gamble.create(round_id: @round.id, player_id: @player.id)
+        end
       end
+      @players = @round.players
     end
-    @round = Round.find(params[:round_id])
-    @players = @round.players
     render partial: 'add_player', layout: false, locals: { players: @players }
   end
 
