@@ -16,8 +16,8 @@
           <div class="bet-color ml-3" style="background-color: <%=gamble.color_hex(gamble.color)%>"></div>
         </div>
         <h5 class="text-dark pt-3 cash">cash: $<%= gamble.player.cash%></h5>
-        <h5 class="text-dark bet-amount">bet: $0</h5>
-        <h5 class="text-dark prize">prize: $<%= gamble.prize%></h5>
+        <h5 class="text-dark bet-amount">bet: $<%=gamble.amount%></h5>
+        <h5 class="text-success prize">prize: $<%= gamble.prize%></h5>
       </div>
     </div>
   <% end %>
