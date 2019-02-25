@@ -4,10 +4,6 @@ window.onload = function () {
   if ( timer === null || timer === "undefined" ) {
       localStorage.setItem("timerDistance", 180000);
   }
-  // if (localStorage.getItem("firstPlayers") === null) {
-  //   addPlayers();
-  //   localStorage.setItem("firstLPayers", true);
-  // }
 }
 $(document).ready(function() {
 
@@ -115,7 +111,7 @@ $(document).ready(function() {
   }
 
   function clearWinners(){
-    var winners = $('#round-rulet');
+    var winners = document.getElementById("round-rulet");
     while (winners.firstChild) {
       winners.removeChild(winners.firstChild);
     }
@@ -161,5 +157,5 @@ $(document).ready(function() {
       }
     }, 1000);
   }
-  // timer();
+  timer();
 });
