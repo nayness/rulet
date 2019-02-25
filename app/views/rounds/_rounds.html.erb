@@ -12,7 +12,7 @@
           <p><span class="text-dark font-weight-bold">winners:</span>
             <% round.winners.each do |gamble|%>
               <%= link_to gamble.player.name, player_path(gamble.player), class: 'text-secondary'%>
-              <span class="card-text text-info">$<%= gamble.player.cash%></span>
+              <span class="card-text text-info">$<%= gamble.amount%></span>
             <% end %>
             <p class="text-success"><span class="text-dark font-weight-bold">total prize: </span>$<%= round.total_amount%></p>
           </p>
