@@ -1,6 +1,6 @@
 # README
 
-This is a demo simulation of a monitoring system in a casino for rulet players. The rulet spins automatically every 3 mins, players make their bets and winners of each round are shown once the round ends in the main page.
+This is a demo simulation of a monitoring system in a casino for rulet players. The rulet spins automatically every 3 mins, players make their bets and winners of each round are shown once the round ends.
 
 ## Getting Started
 
